@@ -1,0 +1,9 @@
+/* To do list */
+
+1. Start by creating the login and sign up pages.
+
+2. Hook up the backend code to reacts frontend code via axios requests
+
+3. Create the dashboard
+
+4. Allow the dashboard access via jsonwebtoken
