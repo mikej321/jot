@@ -1,0 +1,10 @@
+/* Instructions for form toggle */
+
+ 1. Create both forms in the frontend. Make it to where react renders
+    one or the other via state. The state will be toggled by clicking
+    on the toggleIndicator div. Turn the pointer events off on the
+    Log In and Sign Up button and instead, have the pointer events
+    on toggleIndicator.
+
+2. Add the necessary regex tests for the inputs in the forms that will be created.
+
