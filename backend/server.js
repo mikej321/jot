@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const prisma = require("./prisma");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 const cors = require("cors");
