@@ -1,0 +1,19 @@
+.mainContainer.signupContainer .pageContent.signupPage {
+    grid-area: content;
+    align-self: start;
+    margin-top: 30px;
+}
+
+.mainContainer.signupContainer .pageInputContainer.signupInputContainer {
+    grid-area: inputs;
+    align-self: start;
+    margin-top: 10px;
+}
+
+.mainContainer.signupContainer .landingButtonContainer {
+    grid-area: proceedButton;
+    align-self: end;
+    margin-bottom: 60px;
+    justify-self: center;
+    min-width: 300px;
+}

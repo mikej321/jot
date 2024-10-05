@@ -1,0 +1,30 @@
+.mainContainer.landingContainer nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainContainer.loginContainer nav,
+.mainContainer.signupContainer nav {
+    grid-area: nav;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.arrow {
+    width: 28px;
+    height: 24px;
+    color: #463115;
+    transition: color 0.2s ease-in-out;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+/* Add night mode styling for arrow here */
+.mainContainer.darkMode .arrow {
+    color: rgb(210, 248, 223);
+}
+

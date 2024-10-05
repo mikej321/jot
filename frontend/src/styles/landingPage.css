@@ -1,0 +1,116 @@
+.contentContainer {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    transform: translateY(-80px);
+    gap: 80px;
+}
+
+@media screen and (min-width: 600px) {
+    .contentContainer {
+        transform: translateY(-25px);
+    }
+}
+
+
+.mobileControls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.desktopControls {
+    display: none;
+}
+
+.desktopForm {
+    max-height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 600px) {
+    .mainContainer.landingContainer .pageContent.landingContent {
+        align-self: unset;
+    }
+
+        .mobileControls {
+        display: none;
+        grid-area: unset;
+    } 
+
+    
+    .desktopControls {
+        position: relative;
+        width: 400px;
+        height: 60px;
+        border-radius: 8px;
+        background: rgb(70, 49, 21);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        z-index: -1;
+        transform: translateY(-30px);
+    }
+
+    .mainContainer.landingContainer.darkMode .desktopControls {
+        background: rgb(28, 76, 49);
+    }
+
+    .toggleIndicator {
+        height: 52px;
+        width: 180px;
+        border-radius: 8px;
+        background: rgb(184, 94, 11);
+        position: absolute;
+        top: 4px;
+        transform: translateX(4px);
+        z-index: 1;
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+    }
+
+    .pageInputContainer.landingInputContainer {
+        grid-area: form;
+    }
+
+    .mainContainer.darkMode.landingContainer .pageInputContainer.landingInputContainer .desktopControls {
+        background: rgb(28, 76, 49);
+    }
+
+    .mainContainer.darkMode .toggleIndicator {
+        background: rgb(56, 152, 98);
+    }
+
+    .toggleIndicator[signUpForm=""] {
+        transform: translateX(216px);
+    }
+    
+    .desktopControls button {
+        border: none;
+        background: transparent;
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    .desktopLoginButton {
+        position: relative;
+        left: 65px;
+    }
+
+    .desktopSignupButton {
+        position: relative;
+        right: 63px;
+    }
+
+    .desktopForm {
+        max-height: initial;
+        width: initial;
+        overflow: initial;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
