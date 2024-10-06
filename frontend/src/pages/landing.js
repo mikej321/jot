@@ -7,7 +7,7 @@ import SignupButton from "../partials/components/signupButton";
 import DesktopToggle from "../partials/components/desktopFormToggle";
 import DesktopFormLogin from "../partials/desktopFormLogin";
 import DesktopFormSignup from "../partials/desktopFormSignup";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion'
 
 const containerVariant = {
@@ -67,24 +67,6 @@ const inputVariant = {
     }
   }
 }
-
-const formVariant = {
-  hidden: {
-    opacity: 0
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      when: 'beforeChildren',
-      staggerChildren: 0.35,
-    }
-  }
-}
-
-const formInputVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
-};
 
 function LandingPage() {
   const [formState, setFormState] = useState("login");
@@ -157,7 +139,7 @@ function LandingPage() {
             the signup toggle is clicked. When reverting back to login, I should animate the extra
             inputs out, before animating the form back towards the middle. This should be done smoothly.  */}
           </motion.div>
-          <motion.button type="submit" className="landingSubmitButton">Continue</motion.button>
+          <motion.button type="submit" className="landingSubmitButton" variants={contentVariant}>Continue</motion.button>
       </motion.div>
     </AnimatePresence>
   );

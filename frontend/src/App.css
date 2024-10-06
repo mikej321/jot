@@ -20,6 +20,8 @@ body {
     font-size: 1.6rem;
     background: linear-gradient(180deg, rgba(255, 227, 187, .5) 0%, rgba(229, 187, 128, .50) 31%, rgba(219, 128, 0, .5) 79%);
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
 label {
@@ -62,6 +64,7 @@ button {
 }
 
 .mainContainer {
+    position: relative;
     display: grid;
     height: 100vh;
     margin: 0 auto;
@@ -99,6 +102,12 @@ button {
 .mainContainer.signupContainer {
     grid-template-areas: "nav" "content" "inputs" "proceedButton";
     grid-template-rows: 50px 150px repeat(2, 1fr);
+}
+
+.mainContainer.dashboardContainer {
+    grid-template-areas: "nav" "searchbar" "content" "footer";
+    grid-template-rows:  80px 140px 1fr 70px;
+    gap: 0;
 }
 
 .mainContainer.darkMode {

@@ -3,7 +3,7 @@ import UsernameInput from "../partials/components/usernameInput";
 import PasswordInput from "../partials/components/passwordInput";
 import LoginButton from "../partials/components/loginButton";
 import "../styles/loginPage.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const containerVariant = {
   hidden: {

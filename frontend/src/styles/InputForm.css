@@ -118,6 +118,52 @@
     display: none;
 }
 
+.mobileFooter {
+    width: 100%;
+    position: fixed;
+    justify-self: center;
+    bottom: 0;
+    grid-area: footer;
+    height: 70px;
+    background: rgb(174, 123, 52);
+    padding-inline: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.footerButton {
+    width: 50px;
+    height: 50px;
+    background: rgb(255, 255, 255, 20%);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 4px 7px rgba(223, 202, 174, 15%),
+                1px 1px 1px rgba(223, 202, 174, 15%),
+                -1px -1px 1px rgba(238, 238, 238, 40%),
+                -4px -4px 7px rgba(135, 134, 134, 40%);
+    cursor: pointer;
+    pointer-events: all;
+}   
+
+.mobileFooterIcon {
+    width: 27px;
+    height: 24px;
+    color: rgb(236, 218, 192);
+    cursor: none;
+    pointer-events: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.footerButton:hover .mobileFooterIcon {
+    color: rgb(114, 214, 0);
+}
+
+
 @media screen and (min-width: 600px) {
     .landingSubmitButton {
         display: initial;
