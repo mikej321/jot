@@ -5,10 +5,8 @@ import "../../styles/dashboard.css";
 function EngineerDashboardBlock() {
   return (
     <div className="dashboardBlock engineerBlock">
-      <div className="blockContent">
-        <FontAwesomeIcon icon={faGears} className="dashboardIcon" />
-        <div className="blockLabel">Engineer</div>
-      </div>
+      <FontAwesomeIcon icon={faGears} className="dashboardIcon" />
+      <div className="blockLabel">Engineer</div>
     </div>
   );
 }

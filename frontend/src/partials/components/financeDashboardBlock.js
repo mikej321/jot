@@ -5,10 +5,8 @@ import "../../styles/dashboard.css";
 function FinanceDashboardBlock() {
   return (
     <div className="dashboardBlock financeBlock">
-      <div className="blockContent">
-        <FontAwesomeIcon icon={faMoneyBillWave} className="dashboardIcon" />
-        <div className="blockLabel">Finance</div>
-      </div>
+      <FontAwesomeIcon icon={faMoneyBillWave} className="dashboardIcon" />
+      <div className="blockLabel">Finance</div>
     </div>
   );
 }

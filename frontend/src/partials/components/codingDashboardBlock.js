@@ -5,10 +5,8 @@ import "../../styles/dashboard.css";
 function CodingDashboardBlock() {
   return (
     <div className="dashboardBlock codingBlock">
-      <div className="blockContent">
-        <FontAwesomeIcon icon={faCode} className="dashboardIcon" />
-        <div className="blockLabel">Coding</div>
-      </div>
+      <FontAwesomeIcon icon={faCode} className="dashboardIcon" />
+      <div className="blockLabel">Coding</div>
     </div>
   );
 }

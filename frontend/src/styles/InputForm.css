@@ -119,6 +119,7 @@
 }
 
 .mobileFooter {
+    grid-area: footer;
     width: 100%;
     position: fixed;
     justify-self: center;
@@ -131,6 +132,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 25px;
+}
+
+@media screen and (min-width: 600px) {
+    .mobileFooter {
+        display: none;
+    }
 }
 
 .footerButton {

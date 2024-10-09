@@ -5,10 +5,8 @@ import "../../styles/dashboard.css";
 function LawDashboardBlock() {
   return (
     <div className="dashboardBlock lawBlock">
-      <div className="blockContent">
-        <FontAwesomeIcon icon={faGavel} className="dashboardIcon" />
-        <div className="blockLabel">Law</div>
-      </div>
+      <FontAwesomeIcon icon={faGavel} className="dashboardIcon" />
+      <div className="blockLabel">Law</div>
     </div>
   );
 }

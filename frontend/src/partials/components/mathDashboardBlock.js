@@ -5,13 +5,8 @@ import "../../styles/dashboard.css";
 function MathDashboardBlock() {
   return (
     <div className="dashboardBlock mathBlock">
-      <div className="blockContent">
-        <FontAwesomeIcon
-          icon={faSquareRootVariable}
-          className="dashboardIcon"
-        />
-        <div className="blockLabel">Math</div>
-      </div>
+      <FontAwesomeIcon icon={faSquareRootVariable} className="dashboardIcon" />
+      <div className="blockLabel">Math</div>
     </div>
   );
 }
