@@ -17,118 +17,111 @@ import Sidebar from "../partials/sidebar";
 
 function Dashboard() {
   const [open, setOpen] = useState(false);
-  const [layout, setLayout] = useState('layout1');
-  const [userWidth, setUserWidth] = useState(window.innerWidth);
   const initialRender = useRef(true);
 
   const staggerSideIcons = stagger(0.1, { startDelay: 0.25 });
 
-  const layoutStyles = {
-    'mobileLayout': {
-        gridTemplateAreas: `
-            "nav"
-            "pageTitleSearch"
-            "content"
-            "footer"
-        `,
-    },
-    'layout1': {
-        gridTemplateAreas: `
-            "nav nav nav"
-            "sidebar pageTitleSearch pageTitleSearch"
-            "sidebar content content"
-        `,
-    },
-  }
-
-  useEffect(() => {
-    const handleResize = () => {
-        setUserWidth(window.innerWidth);
-    }
-
-    window.addEventListener('resize', handleResize);
-    
-    handleResize();
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (userWidth <= 600) {
-        setLayout('mobileLayout');
-    } else if (userWidth > 600) {
-        setLayout('layout1');
-    } 
-  }, [userWidth])
-
-  const sidebarAnimation = async () => {
+  const sidebarIconAnimation = async () => {
+      
     if (open) {
       animate(
-        '.mainContainer.dashboardContainer',
-        { gridTemplateColumns: '320px 1fr 2fr' },
-        { duration: 0.2 }
+          '.bar1',
+          { y: 10 },
+          { duration: 0.2 }
       )
-      animate(
-        '.bar1',
-        { y: 10 },
-        { duration: 0.2 }
-      )
+
       animate(
         '.bar2',
         { opacity: 0 },
         { duration: 0.2 }
       )
+      
       await animate(
         '.bar3',
         { y: -10 },
         { duration: 0.2 }
       )
+
       animate(
         '.bar1',
         { rotate: 45 },
-        { duration: 0.2, transformOrigin: 'top left' }
+        { duration: 0.1, transformOrigin: 'top left' }
       )
-      animate(
+
+      await animate(
         '.bar3',
         { rotate: -45 },
-        { duration: 0.2, transformOrigin: 'top left' }
+        { duration: 0.1, transformOrigin: 'top left' }
+      )
+
+      await animate(
+        '.sideLinks',
+        { opacity: 1 },
+        { delay: 0.1, duration: 0.2 }
+      )
+
+      animate(
+        '.sideLinks a',
+        {
+          opacity: 1,
+          x: 0
+        },
+        {
+          type: 'spring',
+          delay: staggerSideIcons, duration: 0.2
+        }
+      )
+    } else {
+
+      animate(
+        '.bar1',
+        { rotate: 0 },
+        { duration: 0.1, transformOrigin: 'top left' }
+      )
+
+      await animate(
+        '.bar3',
+        { rotate: 0 },
+        { duration: 0.1, transformOrigin: 'top left' }
       )
       
-    } else {
-      animate(
-        '.bar3',
-        { rotate: 0 },
-        { duration: 0.2, transformOrigin: 'top left' }
-      )
       animate(
         '.bar1',
-        { rotate: 0 },
-        { duration: 0.2, transformOrigin: 'top left' }
+        { y: 0 },
+        { duration: 0.2 }
       )
-      await animate(
+
+      animate(
         '.bar2',
-        { opacity: 1 },
-        { duration: 0.1 }
-      );
-      animate(
+        { opacity: 1 }
+      )
+
+      await animate(
         '.bar3',
         { y: 0 },
         { duration: 0.2 }
       )
-      await animate(
-        '.bar1',
-        { y: 0 },
-        { duration: 0.2 }
+
+      animate(
+        '.sideLinks',
+        { opacity: 0 },
+        { duration: 0.2,}
       )
+
       await animate(
-        '.mainContainer.dashboardContainer',
-        { gridTemplateColumns: '0px 1fr 2fr' },
-        { duration: 0.2 }
+        '.sideLinks a',
+        { opacity: 0, x: -50 },
+        { duration: 0.2, delay: staggerSideIcons }
       )
+
+
+      
     }
   }
 
+ 
   useEffect(() => {
-    sidebarAnimation();
+      sidebarIconAnimation()     
   }, [open])
 
   const handleSidebarClick = () => {
@@ -137,17 +130,10 @@ function Dashboard() {
 
   return (
     <motion.div
-     className="mainContainer dashboardContainer" 
-     layout
-     style={{
-        gridTemplateAreas: layoutStyles[layout].gridTemplateAreas,
-     }}
-     initial={{
-        gridTemplateColumns: '320px 1fr 2fr',
-     }}
+     className={`mainContainer dashboardContainer ${open ? 'open' : ''}`} 
      >
       <DashboardNav />
-      <motion.div className="hamburgerMenu" onClick={handleSidebarClick}>
+      <motion.div className={`hamburgerMenu ${open ? 'open' : ''}`} onClick={handleSidebarClick}>
             <motion.div className="bar bar1"></motion.div>
             <motion.div className="bar bar2"></motion.div>
             <motion.div className="bar bar3"></motion.div>
@@ -157,9 +143,13 @@ function Dashboard() {
         initial={{
             paddingLeft: 0,
         }}
-        layout
       >
-        <motion.div className="sideLinks">
+        <motion.div
+         className="sideLinks"
+         initial={{
+          opacity: 0,
+         }}
+         >
           <Link to="/dashboard/addJot">Add Jot</Link>
           <Link to="/dashboard/editJot">Edit Jot</Link>
           <Link to="/dashboard/removeJot">Remove Jot</Link>

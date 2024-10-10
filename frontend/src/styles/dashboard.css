@@ -420,7 +420,7 @@ p.logo {
     .hamburgerMenu {
         position: absolute;
         top: 170px;
-        left: 60px;
+        left: 20px;
         z-index: 2;
         display: flex;
         flex-direction: column;
@@ -433,6 +433,11 @@ p.logo {
         margin-top: 5px;
         cursor: pointer;
         pointer-events: all;
+        transition: left 0.2s ease-in-out 0.4s;
+    }
+
+    .hamburgerMenu.open {
+        left: 60px;
     }
 }
 

@@ -113,6 +113,8 @@ button {
     width: 100%;
     max-width: 500px;
     grid-template-rows: 80px 200px repeat(2, 1fr);
+    grid-template-columns: minmax(200px, 375px);
+    grid-template-areas: "nav" "pageTitleSearch" "content" "footer";
     padding-top: 0;
     gap: 0;
 }
@@ -120,10 +122,18 @@ button {
 @media screen and (min-width: 600px) {
     .mainContainer.dashboardContainer {
         max-width: 1440px;
+        grid-template-areas: "nav nav nav" "sidebar pageTitleSearch pageTitleSearch" "sidebar content content";
         grid-template-rows: 100px 170px 1fr;
+        grid-template-columns: 0px 1fr 2fr;
+        transition: all 0.3s ease-in-out 0.3s;
+    }
+
+    .mainContainer.dashboardContainer.open {
+        grid-template-columns: 320px 1fr 2fr;
         column-gap: 40px;
     }
 }
+
 
 .mainContainer.darkMode {
     color: rgb(210, 248, 213);
