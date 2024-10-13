@@ -1,12 +1,17 @@
 import "../../App.css";
 import "../../styles/InputForm.css";
-import { Link } from "react-router-dom";
 
-function LoginButton() {
+function LoginButton({ handleButtonVisibility, handleFormState }) {
   return (
-    <Link to="/login" className="landingButton">
+    <button 
+      className="landingButton"
+      onClick={() => {
+        handleButtonVisibility();
+        handleFormState('login');
+      }}
+      >
       Log In
-    </Link>
+    </button>
   );
 }
 

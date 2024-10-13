@@ -139,8 +139,9 @@ button {
     color: rgb(210, 248, 213);
 }
 
-.mainContainer .dayNightModeToggle {
-    justify-self: end;
+.dayNightModeToggle {
+    position: absolute;
+    right: 0;
 }
 
 .mainContainer h1 {

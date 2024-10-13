@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FirstNameInput from "./components/firstNameInput";
 import LastNameInput from "./components/lastNameInput";
 import PasswordInput from "./components/passwordInput";
@@ -23,9 +24,30 @@ const inputVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
 };
 
-function DesktopFormSignup() {
+function DesktopFormSignup({
+  getFirstName,
+  getLastName,
+  getUsername,
+  getPassword,
+}) {
+  const getFirstNameVal = (firstNameVal) => {
+    getFirstName(firstNameVal);
+  };
+
+  const getLastNameVal = (lastNameVal) => {
+    getLastName(lastNameVal);
+  };
+
+  const getUserVal = (usernameVal) => {
+    getUsername(usernameVal);
+  };
+
+  const getPasswordVal = (passwordVal) => {
+    getPassword(passwordVal);
+  };
+
   return (
-    <motion.form
+    <motion.div
       action=""
       method="POST"
       className="desktopForm"
@@ -35,18 +57,18 @@ function DesktopFormSignup() {
       exit="hidden"
     >
       <motion.div variants={inputVariants}>
-        <FirstNameInput />
+        <FirstNameInput getFirstNameVal={getFirstNameVal} />
       </motion.div>
       <motion.div variants={inputVariants}>
-        <LastNameInput />
+        <LastNameInput getLastNameVal={getLastNameVal} />
       </motion.div>
       <motion.div variants={inputVariants}>
-        <UsernameInput />
+        <UsernameInput getUserVal={getUserVal} />
       </motion.div>
       <motion.div variants={inputVariants}>
-        <PasswordInput />
+        <PasswordInput getPasswordVal={getPasswordVal} />
       </motion.div>
-    </motion.form>
+    </motion.div>
   );
 }
 

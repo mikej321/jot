@@ -10,6 +10,9 @@ const app = express();
 // Prisma Client
 const prisma = require("./prisma");
 
+// Routes
+const signupRoute = require("./routes/signupRoute");
+
 const corsOptions = {
   origin: "http://localhost:3000",
   methods: ["GET", "POST", "OPTIONS"],
@@ -97,20 +100,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 // Sign up route
-app.post("/api/signup", async (req, res, next) => {
-  const { username, password } = req.body;
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await prisma.user.create({
-    data: {
-      username,
-      password: hashedPassword,
-    },
-  });
-
-  res.json({ success: true, message: "Signup successful" });
-});
-
+app.post("/signup", signupRoute);
 // Main react route
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));

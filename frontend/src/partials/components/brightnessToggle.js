@@ -15,10 +15,8 @@ function BrightnessToggle() {
   };
 
   return (
-    <div className="dayNightModeToggle" onClick={(e) => handleToggle(e)}>
-      <div className="toggleContainer">
-        <div className="ball"></div>
-      </div>
+    <div className="toggleContainer" onClick={(e) => handleToggle(e)}>
+      <div className="ball"></div>
     </div>
   );
 }

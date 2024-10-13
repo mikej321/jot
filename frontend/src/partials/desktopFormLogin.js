@@ -23,7 +23,7 @@ const inputVariants = {
 
 function DesktopFormLogin() {
   return (
-    <motion.form
+    <motion.div
       className="desktopForm"
       action=""
       method="POST"
@@ -38,7 +38,7 @@ function DesktopFormLogin() {
       <motion.div variants={inputVariants}>
         <PasswordInput />
       </motion.div>
-    </motion.form>
+    </motion.div>
   );
 }
 

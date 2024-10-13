@@ -2,11 +2,17 @@ import "../../App.css";
 import "../../styles/InputForm.css";
 import { Link } from "react-router-dom";
 
-function SignupButton() {
+function SignupButton({ handleButtonVisibility, handleFormState }) {
   return (
-    <Link to="/signup" className="landingButton">
+    <button
+     className="landingButton"
+     onClick={() => {
+      handleButtonVisibility();
+      handleFormState('signup');
+     }}
+     >
       Sign Up
-    </Link>
+    </button>
   );
 }
 
