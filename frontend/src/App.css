@@ -131,6 +131,12 @@ button {
     right: 0;
 }
 
+@media screen and (min-width: 600px) {
+    .dayNightModeToggle {
+        right: 40px;
+    }
+}
+
 .mainContainer h1 {
     font-family: 'IBM Plex Sans', system-ui;
 }

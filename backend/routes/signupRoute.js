@@ -15,7 +15,6 @@ Router.post("/", async (req, res, next) => {
         password: hashedPassword,
       },
     });
-
     res.json({ success: true, message: "Signup successful" });
   } catch (err) {
     console.error("Error creating user:", err);

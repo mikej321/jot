@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Router = require("express").Router();
+const prisma = require("../prisma");
+const bcrypt = require("bcryptjs");
 
 Router.post("/", async (req, res) => {
   const { username, password } = req.body;

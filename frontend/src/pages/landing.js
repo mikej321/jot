@@ -126,6 +126,7 @@ function LandingPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState('');
 
   const firstRender = useRef(true);
 
@@ -145,7 +146,12 @@ function LandingPage() {
       });
 
       setMessage(response.data.message);
-      navigate("/api/dashboard");
+      setSuccess(firstName);
+
+      setTimeout(() => {
+
+        navigate("/api/dashboard");
+      }, 5000);
     } catch (err) {
       // Handle error
       if (err.response) {
@@ -169,9 +175,17 @@ function LandingPage() {
       const response = await axios.post("http://localhost:5000/api/login", {
         username,
         password,
-      });
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+    );
 
+      localStorage.setItem("token", response.data.token);
       setMessage(response.data.message);
+      navigate("/api/dashboard");
     } catch (err) {
       // Handle error
       if (err.response) {
@@ -202,106 +216,132 @@ function LandingPage() {
 
   const getFirstName = (firstNameVal) => {
     setFirstName(firstNameVal);
-    console.log("changing first name value");
   };
 
   const getLastName = (lastNameVal) => {
     setLastName(lastNameVal);
-    console.log("changing last name value");
   };
 
   const getUsername = (usernameVal) => {
     setUsername(usernameVal);
-    console.log("changing username value");
   };
 
   const getPassword = (passwordVal) => {
     setPassword(passwordVal);
-    console.log("changing password value");
   };
 
+  /* Make a modal box that fadesIn when the user signs up. Have it display a thanks message
+  for signing up */
+
   return (
-    <motion.form
-      className="mainContainer landingContainer"
-      variants={containerVariant}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      onSubmit={formState === "login" ? handleLogin : handleSignup}
-      layout
+    <AnimatePresence
+      mode="wait"
     >
-      {/* On the mobile version of the app, I want to create a circular
-        phrase that says 'A note-taking App' and it will circle the
-        outside of the main content on the landing page. This could
-        be done after everything is set up */}
-      <nav className="landingNav">
-        <motion.div className="dayNightModeToggle" layout>
-          <BrightnessToggle />
+      <motion.form
+        className="mainContainer landingContainer"
+        variants={containerVariant}
+        initial="hidden"
+        animate="visible" 
+        exit="hidden"
+        onSubmit={formState === "login" ? handleLogin : handleSignup}
+        layout
+      >
+        {/* On the mobile version of the app, I want to create a circular
+          phrase that says 'A note-taking App' and it will circle the
+          outside of the main content on the landing page. This could
+          be done after everything is set up */}
+        <nav className="landingNav">
+          <motion.div className="dayNightModeToggle" layout>
+            <BrightnessToggle />
+          </motion.div>
+        </nav>
+        <motion.div className="contentContainer">
+          <motion.div
+            className="pageContent landingContent"
+            variants={contentVariant}
+          >
+            <h1>Welcome to Jot!</h1>
+            <p>Please log in or sign up below</p>
+          </motion.div>
+          <motion.div className="landingControls" variants={loginToggleVariant}>
+            <DesktopToggle setFormState={setFormState} />
+          </motion.div>
         </motion.div>
-      </nav>
-      <motion.div className="contentContainer">
-        <motion.div
-          className="pageContent landingContent"
+        <motion.div className="pageInputContainer landingInputContainer">
+          <AnimatePresence mode="wait">
+            {formState === "login" ? (
+              <motion.div
+                className="formInputs loginInputs"
+                key="login"
+                variants={formContainerVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+      
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <UsernameInput getUsername={getUsername} />
+                </motion.div>
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <PasswordInput getPassword={getPassword} />
+                </motion.div>
+              </motion.div>
+            ) : (
+              <motion.div
+                className="formInputs signupInputs"
+                key="signup"
+                variants={formContainerVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                { success &&
+      
+                <motion.div
+                 className="signupModal"
+                 key="success"
+                 initial={{
+                  opacity: 0,
+                  zIndex: -1
+                 }}
+                 animate={{
+                  opacity: 1,
+                  zIndex: 3
+                 }}
+                 exit={{
+                  opacity: 0,
+                  zIndex: -1
+                 }}
+                 >
+                  <p>Thanks for joining</p>
+                  <p className="userIdentification">{success}</p>
+                  <p>Let's start Jotting!</p>
+                </motion.div>  }
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <FirstNameInput getFirstName={getFirstName} />
+                </motion.div>
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <LastNameInput getLastName={getLastName} />
+                </motion.div>
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <UsernameInput getUsername={getUsername} />
+                </motion.div>
+                <motion.div className="inputMotion" variants={formInputVariant}>
+                  <PasswordInput getPassword={getPassword} />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+        <motion.button
+          type="submit"
+          className="landingSubmitButton"
           variants={contentVariant}
         >
-          <h1>Welcome to Jot!</h1>
-          <p>Please log in or sign up below</p>
-        </motion.div>
-        <motion.div className="landingControls" variants={loginToggleVariant}>
-          <DesktopToggle setFormState={setFormState} />
-        </motion.div>
-      </motion.div>
-      <motion.div className="pageInputContainer landingInputContainer">
-        <AnimatePresence mode="wait">
-          {formState === "login" ? (
-            <motion.div
-              className="formInputs loginInputs"
-              key="login"
-              variants={formContainerVariant}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <UsernameInput getUsername={getUsername} />
-              </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <PasswordInput getPassword={getPassword} />
-              </motion.div>
-            </motion.div>
-          ) : (
-            <motion.div
-              className="formInputs signupInputs"
-              key="signup"
-              variants={formContainerVariant}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <FirstNameInput getFirstName={getFirstName} />
-              </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <LastNameInput getLastName={getLastName} />
-              </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <UsernameInput getUsername={getUsername} />
-              </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
-                <PasswordInput getPassword={getPassword} />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-      <motion.button
-        type="submit"
-        className="landingSubmitButton"
-        variants={contentVariant}
-      >
-        Continue
-      </motion.button>
-    </motion.form>
+          Continue
+        </motion.button>
+      </motion.form>
+    </AnimatePresence>
   );
 }
 

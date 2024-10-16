@@ -19,6 +19,7 @@
 
 .pageInputContainer.landingInputContainer {
     grid-area: form;
+    position: relative;
 }
 
 .formInputs {
@@ -170,3 +171,36 @@
         gap: 20px;
     }
 }
+
+.signupModal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-inline:20px;
+    text-align: center;
+    gap: 20px;
+    border-radius: 8px;
+    background: rgb(243, 218, 173);
+    box-shadow: 4px 4px 8px rgba(131, 77, 0, .4),
+                1px 1px 2px rgba(131, 77, 0, .4),
+                -1px -1px 2px rgba(233, 179, 102, .4),
+                -4px 4px 4px rgb(233, 179, 102);
+
+}
+
+.signupModal p:first-child {
+    font-size: 16px;
+}
+
+.userIdentification {
+    font-weight: bold;
+}
+
+.signupModal p:last-child {
+    font-size: 16px;
+}
+
