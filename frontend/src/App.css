@@ -80,22 +80,9 @@ button {
     transition: color 0.2s ease-in-out;
 }
 
-@media screen and (min-width: 600px) {
-    .mainContainer {
-        height: 100%;
-    }
-}
-
 .mainContainer.landingContainer {
-    grid-template-areas: "nav" "content";
-    grid-template-rows: 50px 1fr;
-}
-
-@media screen and (min-width: 600px) {
-    .mainContainer.landingContainer {
-        grid-template-areas: "nav" "content" "form" "proceedButton";
-        grid-template-rows: 50px 300px 300px 100px;
-    }
+    grid-template-areas: "nav" "content" "form" "proceedButton";
+    grid-template-rows: 50px min-content minmax(300px, 350px) min-content;
 }
 
 .mainContainer.loginContainer {
@@ -181,17 +168,15 @@ button {
 .pageInputContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 20px;
+    margin-top: 20px;
 }
 
 @media screen and (min-width: 600px) {
     .pageInputContainer {
-        justify-content: unset;
         max-width: 400px;
         justify-self: center;
-        margin-top: -50px;
     }
 }
 

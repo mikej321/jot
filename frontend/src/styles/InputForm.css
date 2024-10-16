@@ -115,7 +115,28 @@
 }
 
 .landingSubmitButton {
-    display: none;
+    grid-area: proceedButton;
+    width: 100%;
+    max-width: 300px;
+    border: none;
+    border-radius: 8px;
+    height: 60px;
+    background: rgb(70, 49, 21);
+    color: rgb(250, 246, 239);
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+    margin-top: 60px;
+}
+
+.mainContainer.darkMode .landingSubmitButton {
+    background: rgb(65, 123, 90);
+    color: rgb(210, 248, 223);
+}
+
+.mainContainer.darkMode .landingSubmitButton:hover {
+    background: rgb(103, 149, 123);
+    color: rgb(60, 83, 70);
 }
 
 .mobileFooter {
@@ -171,32 +192,7 @@
 }
 
 
-@media screen and (min-width: 600px) {
-    .landingSubmitButton {
-        display: initial;
-        grid-area: proceedButton;
-        width: 100%;
-        max-width: 300px;
-        border: none;
-        border-radius: 8px;
-        height: 60px;
-        background: rgb(70, 49, 21);
-        color: rgb(250, 246, 239);
-        align-self: center;
-        justify-self: center;
-        cursor: pointer;
-    }
-    
-    .mainContainer.darkMode .landingSubmitButton {
-        background: rgb(65, 123, 90);
-        color: rgb(210, 248, 223);
-    }
-    
-    .mainContainer.darkMode .landingSubmitButton:hover {
-        background: rgb(103, 149, 123);
-        color: rgb(60, 83, 70);
-    }
-}
+
 
 
 

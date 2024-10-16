@@ -2,15 +2,18 @@ import "../App.css";
 import "../styles/InputForm.css";
 import "../styles/landingPage.css";
 import BrightnessToggle from "../partials/components/brightnessToggle";
-import LoginButton from "../partials/components/loginButton";
-import SignupButton from "../partials/components/signupButton";
 import DesktopToggle from "../partials/components/desktopFormToggle";
-import DesktopFormLogin from "../partials/desktopFormLogin";
-import DesktopFormSignup from "../partials/desktopFormSignup";
+import FirstNameInput from "../partials/components/firstNameInput";
+import LastNameInput from "../partials/components/lastNameInput";
+import UsernameInput from "../partials/components/usernameInput";
+import PasswordInput from "../partials/components/passwordInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence, stagger, animate } from "framer-motion";
+
+// The stagger effect
+const staggerList = stagger(0.1, { startDelay: 0.25 });
 
 const containerVariant = {
   hidden: {
@@ -70,6 +73,10 @@ const inputVariant = {
   },
 };
 
+const formContainerVariant = {};
+
+const formInputVariant = {};
+
 function LandingPage() {
   const [formState, setFormState] = useState("login");
   const [buttonVisibility, setButtonVisibility] = useState(true);
@@ -77,6 +84,8 @@ function LandingPage() {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const firstRender = useRef(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,120 +125,93 @@ function LandingPage() {
   };
 
   return (
-    <AnimatePresence>
-      <motion.form
-        className="mainContainer landingContainer"
-        variants={containerVariant}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        onSubmit={handleSubmit}
-        layout
-      >
-        {/* On the mobile version of the app, I want to create a circular
+    <motion.form
+      className="mainContainer landingContainer"
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      onSubmit={handleSubmit}
+      layout
+    >
+      {/* On the mobile version of the app, I want to create a circular
         phrase that says 'A note-taking App' and it will circle the
         outside of the main content on the landing page. This could
         be done after everything is set up */}
-        <nav class="landingNav">
-          <AnimatePresence>
-            {!buttonVisibility && (
-              <motion.div
-                className="arrowContainer"
-                initial={{
-                  opacity: 0,
-                  x: -50,
-                  transition: {
-                    duration: 0.2,
-                    ease: "easeInOut",
-                  },
-                }}
-                animate={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  x: -50,
-                  transition: {
-                    duration: 0.3,
-                    ease: "easeIn",
-                  },
-                }}
-                style={
-                  buttonVisibility
-                    ? { cursor: "none", pointerEvents: "none" }
-                    : { cursor: "pointer", pointerEvents: "all" }
-                }
-                layout
-              >
-                <FontAwesomeIcon
-                  icon={faArrowLeft}
-                  className="landingArrow"
-                  onClick={handleBackButton}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <motion.div className="dayNightModeToggle" layout>
-            <BrightnessToggle />
-          </motion.div>
-        </nav>
-        <motion.div className="contentContainer">
-          <motion.div
-            className="pageContent landingContent"
-            variants={contentVariant}
-          >
-            <h1>Welcome to Jot!</h1>
-            <p>Please log in or sign up below</p>
-          </motion.div>
-          <motion.div className="mobileControls" variants={inputVariant}>
-            <LoginButton
-              handleButtonVisibility={handleButtonVisibility}
-              handleFormState={handleFormState}
-            />
-            <SignupButton
-              handleButtonVisibility={handleButtonVisibility}
-              handleFormState={handleFormState}
-            />
-          </motion.div>
-          <motion.div className="desktopControls" variants={loginToggleVariant}>
-            <DesktopToggle setFormState={setFormState} />
-          </motion.div>
+      <nav className="landingNav">
+        <motion.div className="dayNightModeToggle" layout>
+          <BrightnessToggle />
         </motion.div>
-        <motion.div className="pageInputContainer landingInputContainer">
-          <AnimatePresence>
-            {formState === "login" ? (
-              <motion.div variants={inputVariant}>
-                <DesktopFormLogin />
-              </motion.div>
-            ) : (
-              <motion.div variants={inputVariant}>
-                <DesktopFormSignup
-                  getFirstName={getFirstName}
-                  getLastName={getLastName}
-                  getUsername={getUsername}
-                  getPassword={getPassword}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-        <motion.button
-          type="submit"
-          className="landingSubmitButton"
+      </nav>
+      <motion.div className="contentContainer">
+        <motion.div
+          className="pageContent landingContent"
           variants={contentVariant}
         >
-          Continue
-        </motion.button>
-      </motion.form>
-    </AnimatePresence>
+          <h1>Welcome to Jot!</h1>
+          <p>Please log in or sign up below</p>
+        </motion.div>
+        <motion.div className="landingControls" variants={loginToggleVariant}>
+          <DesktopToggle setFormState={setFormState} />
+        </motion.div>
+      </motion.div>
+      <motion.div className="pageInputContainer landingInputContainer">
+        <AnimatePresence>
+          {formState === "login" ? (
+            <motion.div
+              className="formInputs loginInputs"
+              key="login"
+              variants={formContainerVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <UsernameInput />
+              </motion.div>
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <PasswordInput />
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div
+              className="formInputs signupInputs"
+              key="signup"
+              variants={formContainerVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <FirstNameInput />
+              </motion.div>
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <LastNameInput />
+              </motion.div>
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <UsernameInput />
+              </motion.div>
+              <motion.div className="inputMotion" variants={formInputVariant}>
+                <PasswordInput />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+      <motion.button
+        type="submit"
+        className="landingSubmitButton"
+        variants={contentVariant}
+      >
+        Continue
+      </motion.button>
+    </motion.form>
   );
 }
 
 export default LandingPage;
 
-/* Change the desktop page to where it has the same content as the mobile. Take the desktopSignupPage and desktopLoginPage away and instead, just put the inputs on this page
-under one container. Some styling may need to be changed for it to work. */
-
-/* Take the mobile/desktop controls container away and instead, make it to where the desktop toggle is simply under the page.
-The page has far too many containers and this is what's causing the problem. Look into fixing this tomorrow. */
+/* I fixed the mobile/desktop having two separate login/signup pages. Now everything is condensed
+to the landing page. Next, I need to set up animations for the inputs when they come in similar
+to how I had it on the desktop. After that, I should have everything needed to finish
+authentication for Jot! */
