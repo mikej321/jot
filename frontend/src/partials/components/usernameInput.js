@@ -3,7 +3,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/InputForm.css";
 import "../../App.css";
 
-function UsernameInput({ getUserVal, getUsernameMobile }) {
+function UsernameInput({ getUsername }) {
   return (
     <div className="mobileFormInput">
       <FontAwesomeIcon icon={faUser} className="mobileIcon" />
@@ -14,10 +14,7 @@ function UsernameInput({ getUserVal, getUsernameMobile }) {
           type="text"
           name="username"
           id="username"
-          onChange={(e) => {
-            getUserVal(e.target.value);
-            getUsernameMobile(e.target.value);
-          }}
+          onChange={(e) => getUsername(e.target.value)}
         />
       </div>
     </div>

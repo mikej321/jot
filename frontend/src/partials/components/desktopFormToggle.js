@@ -45,12 +45,14 @@ function DesktopToggle({ formState, setFormState }) {
       ></div>
       <button
         className="desktopLoginButton"
+        type="button"
         onClick={(e) => handleToggleLogin(e)}
       >
         Log In
       </button>
       <button
         className="desktopSignupButton"
+        type="button"
         onClick={(e) => handleToggleSignup(e)}
       >
         Sign Up

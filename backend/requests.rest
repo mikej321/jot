@@ -1,0 +1,19 @@
+### Signup Route
+POST http://localhost:5000/api/signup
+Content-Type: application/json
+
+{
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "username": "mikej321",
+    "password": "Akatsuki1!@"
+}
+
+### Login Route
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "username": "mikej321",
+    "password": "Akatsuki1!@"
+}

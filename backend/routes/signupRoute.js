@@ -5,31 +5,22 @@ const bcrypt = require("bcryptjs");
 Router.post("/", async (req, res, next) => {
   const { firstName, lastName, username, password } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await prisma.user.create({
-    data: {
-      firstName,
-      lastName,
-      username,
-      password: hashedPassword,
-    },
-  });
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        username,
+        password: hashedPassword,
+      },
+    });
 
-  res.json({ success: true, message: "Signup successful" });
+    res.json({ success: true, message: "Signup successful" });
+  } catch (err) {
+    console.error("Error creating user:", err);
+    res.status(500).json({ success: false, message: "signup failed" });
+  }
 });
-
-// app.post("/signup", async (req, res, next) => {
-//     const { username, password } = req.body;
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     await prisma.user.create({
-//       data: {
-//         username,
-//         password: hashedPassword,
-//       },
-//     });
-
-//     res.json({ success: true, message: "Signup successful" });
-//   });
 
 module.exports = Router;

@@ -3,7 +3,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/InputForm.css";
 import "../../App.css";
 
-function PasswordInput({ getPasswordVal, getPasswordMobile }) {
+function PasswordInput({ getPassword }) {
   return (
     <div className="mobileFormInput">
       <FontAwesomeIcon icon={faLock} className="mobileIcon" />
@@ -14,10 +14,7 @@ function PasswordInput({ getPasswordVal, getPasswordMobile }) {
           type="text"
           name="password"
           id="password"
-          onChange={(e) => {
-            getPasswordVal(e.target.value);
-            getPasswordMobile(e.target.value);
-          }}
+          onChange={(e) => getPassword(e.target.value)}
         />
       </div>
     </div>

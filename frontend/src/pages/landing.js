@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, stagger, animate } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // The stagger effect
 const staggerList = stagger(0.1, { startDelay: 0.25 });
@@ -123,11 +125,66 @@ function LandingPage() {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const firstRender = useRef(true);
 
-  const handleSubmit = async (e) => {
+  // Set up the navigate for redirecting to another page
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
     e.preventDefault();
+
+    try {
+      // Send the username and password here to the backend
+      const response = await axios.post("http://localhost:5000/api/signup", {
+        firstName,
+        lastName,
+        username,
+        password,
+      });
+
+      setMessage(response.data.message);
+      navigate("/api/dashboard");
+    } catch (err) {
+      // Handle error
+      if (err.response) {
+        // Request was made and server responded with a code
+        setMessage(err.response.data.message);
+      } else if (err.request) {
+        // Request was made but no response
+        setMessage("No response from server. Please try again");
+      } else {
+        // Something else has happened
+        setMessage("An error has occured. Please try again");
+      }
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Send the username and password here to the backend
+      const response = await axios.post("http://localhost:5000/api/login", {
+        username,
+        password,
+      });
+
+      setMessage(response.data.message);
+    } catch (err) {
+      // Handle error
+      if (err.response) {
+        // Request was made and server responded with a code
+        setMessage(err.response.data.message);
+      } else if (err.request) {
+        // Request was made but no response
+        setMessage("No response from server. Please try again");
+      } else {
+        // Something else has happened
+        setMessage("An error has occured. Please try again");
+      }
+    }
   };
 
   const handleFormState = (toggleVal) => {
@@ -170,7 +227,7 @@ function LandingPage() {
       initial="hidden"
       animate="visible"
       exit="hidden"
-      onSubmit={handleSubmit}
+      onSubmit={formState === "login" ? handleLogin : handleSignup}
       layout
     >
       {/* On the mobile version of the app, I want to create a circular
@@ -206,10 +263,10 @@ function LandingPage() {
               exit="exit"
             >
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <UsernameInput />
+                <UsernameInput getUsername={getUsername} />
               </motion.div>
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <PasswordInput />
+                <PasswordInput getPassword={getPassword} />
               </motion.div>
             </motion.div>
           ) : (
@@ -222,16 +279,16 @@ function LandingPage() {
               exit="exit"
             >
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <FirstNameInput />
+                <FirstNameInput getFirstName={getFirstName} />
               </motion.div>
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <LastNameInput />
+                <LastNameInput getLastName={getLastName} />
               </motion.div>
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <UsernameInput />
+                <UsernameInput getUsername={getUsername} />
               </motion.div>
               <motion.div className="inputMotion" variants={formInputVariant}>
-                <PasswordInput />
+                <PasswordInput getPassword={getPassword} />
               </motion.div>
             </motion.div>
           )}

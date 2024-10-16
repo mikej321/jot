@@ -10,13 +10,18 @@ const app = express();
 // Prisma Client
 const prisma = require("./prisma");
 
+// Token middleware check function
+const verifyToken = require("./controllers/verifyToken");
+
 // Routes
 const signupRoute = require("./routes/signupRoute");
+const loginRoute = require("./routes/loginRoute");
 
 const corsOptions = {
   origin: "http://localhost:3000",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
 
 // Parsing middleware
@@ -41,66 +46,16 @@ app.use((req, res, next) => {
 app.options("*", cors(corsOptions));
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-// middleware function for verifying token
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (token) console.log("Token received successfully", token);
-
-  if (token !== undefined) {
-    req.token = token;
-    next();
-  } else {
-    return res.status(403).json({ message: "Token is undefined" });
-  }
-};
-
 // Test route
 app.get("/test", (req, res) => {
   res.json({ message: "Test successful" });
 });
 
-// Login Route
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-  const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  });
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  // Validate Password
-  const comparison = await bcrypt.compare(password, user.password);
-  if (!comparison) {
-    return res.status(403).json({ message: "Invalid Password" });
-  }
-
-  /* This sign method is just a test. Later on, change the
-  secret key to something more appropriate, like a uuid */
-  jwt.sign(
-    { user },
-    process.env.SECRET_KEY,
-    { expiresIn: "15m" },
-    (err, token) => {
-      if (err) {
-        return res.status(403).json({ message: "Error when signing token" });
-      }
-
-      res.json({
-        message: `${user.username} logged in`,
-        user,
-        token,
-      });
-    }
-  );
-});
-
 // Sign up route
-app.post("/signup", signupRoute);
+app.use("/api/signup", signupRoute);
+
+// Login route
+app.use("/api/login", loginRoute);
 // Main react route
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));

@@ -1,7 +1,7 @@
 import "../../styles/InputForm.css";
 import "../../App.css";
 
-function FirstNameInput({ getFirstNameVal, getFirstNameMobile }) {
+function FirstNameInput({ getFirstName }) {
   return (
     <div className="mobileFormInputNoIcon">
       <div className="inputContentContainerNoIcon">
@@ -10,10 +10,7 @@ function FirstNameInput({ getFirstNameVal, getFirstNameMobile }) {
           type="text"
           name="firstName"
           id="firstName"
-          onChange={(e) => {
-            getFirstNameVal(e.target.value);
-            getFirstNameMobile(e.target.value);
-          }}
+          onChange={(e) => getFirstName(e.target.value)}
         />
       </div>
     </div>
