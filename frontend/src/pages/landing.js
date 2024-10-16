@@ -73,9 +73,48 @@ const inputVariant = {
   },
 };
 
-const formContainerVariant = {};
+const formContainerVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.1,
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+      when: "afterChildren",
+      staggerChildren: 0.1,
+    },
+  },
+};
 
-const formInputVariant = {};
+const formInputVariant = {
+  hidden: {
+    x: -50,
+    opacity: 0,
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    x: 50,
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
 
 function LandingPage() {
   const [formState, setFormState] = useState("login");
@@ -156,7 +195,7 @@ function LandingPage() {
         </motion.div>
       </motion.div>
       <motion.div className="pageInputContainer landingInputContainer">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {formState === "login" ? (
             <motion.div
               className="formInputs loginInputs"
