@@ -1,10 +1,11 @@
 const Router = require("express").Router();
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // Token middleware check function
 const verifyToken = require("../controllers/verifyToken");
 
-Router.post("/", verifyToken, (req, res) => {
+Router.post("/", (req, res) => {
   const { token } = req;
 
   if (!token)

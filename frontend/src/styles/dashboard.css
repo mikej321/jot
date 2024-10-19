@@ -92,12 +92,31 @@
     }
 }
 
+.mainContainer.dashboardContainer .sideLinks {
+    opacity: 0 !important;
+}
+
+.mainContainer.dashboardContainer.open .sideLinks {
+    opacity: 1 !important;
+}
+
+.mainContainer.dashboardContainer .sideLinks a {
+    transform: translateX(-30px) !important;
+    opacity: 0 !important;
+}
+
+.mainContainer.dashboardContainer.open .sideLinks a {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+}
+
 .sideLinks {
     display: flex;
     flex-direction: column;
     gap: 60px;
     margin-top: 150px;
     margin-left: 40px;
+    transition: all 0.2s ease-in-out 0.6s;
 }
 
 .sideLinks a {
@@ -106,6 +125,7 @@
     font-family: 'IBM Plex Sans', system-ui;
     font-size: 20px;
     font-weight: 600;
+    transition: all 0.2s ease-in-out 0.7s;
 }
 
 .userNameFirstLetter {
@@ -333,6 +353,52 @@
     margin-top: 80px;
 }
 
+.blockContainer.jotAdd {
+    grid-template-areas: "block" "title" "content" "continue";
+    margin-top: 0;
+    grid-template-rows: 150px 30px 100px;
+    grid-template-columns: unset;
+    justify-content: center;
+    justify-items: center;
+}
+
+.block {
+    grid-area: block;
+}
+
+.block .dashboardBlock {
+    width: 100%;
+    min-width: 90px;
+    max-width: 90px;
+    min-height: 90px;
+    max-height: 90px;
+}
+
+.block .dashboardBlock > .dashboardIcon {
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.block .dashboardBlock .blockLabel {
+    font-size: 12px;
+}   
+
+.addTitle {
+    grid-area: title;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'IBM Plex Sans', system-ui;
+}
+
+.mobileFormInputNoIcon.jotChoiceInput {
+    grid-area: content;
+    gap: 5px;
+}
+
+.jotSubmit {
+    grid-area: continue;
+}
+
 @media screen and (min-width: 600px) {
     .blockContainer {
         margin-top: 0;
@@ -476,12 +542,35 @@ p.logo {
         margin-top: 5px;
         cursor: pointer;
         pointer-events: all;
-        transition: left 0.2s ease-in-out 0.4s;
+        transition: left 0.2s ease-in-out 0.4s,
+                    transform 0.2s ease-in-out;
+        
     }
 
     .hamburgerMenu.open {
         left: 60px;
     }
+}
+
+.hamburgerMenu .bar1,
+.hamburgerMenu .bar3 {
+    transform: translateY(0) rotate(0);
+}
+
+.hamburgerMenu .bar2 {
+    opacity: 1;
+}
+
+.hamburgerMenu.open .bar1 {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.hamburgerMenu.open .bar2 {
+    opacity: 0;
+}
+
+.hamburgerMenu.open .bar3 {
+    transform: translateY(-10px) rotate(-45deg);
 }
 
 .bar {
@@ -491,8 +580,8 @@ p.logo {
     background: rgb(243, 175, 1);
     cursor: none;
     pointer-events: none;
+    transform-origin: "top left";
+    transition: transform 0.2s ease-in-out,
+                opacity 0.2s ease-in-out;
 }
 
-@media screen and (min-width: 500px) {
-
-}

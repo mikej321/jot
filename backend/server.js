@@ -34,15 +34,6 @@ app.use(
   })
 );
 
-// Middleware for checking the headers for every request made
-app.use((req, res, next) => {
-  console.log("Request Headers:", req.headers);
-  res.on("finish", () => {
-    console.log("Response Headers:", res.getHeaders());
-  });
-  next();
-});
-
 // relative path options and cors options middleware
 app.options("*", cors(corsOptions));
 app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -59,7 +50,7 @@ app.use("/api/signup", signupRoute);
 app.use("/api/login", loginRoute);
 
 // Dashboard route
-app.use("/api/dashboard", dashboardRoute);
+app.use("/api/dashboard", verifyToken, dashboardRoute);
 
 // Main react route
 app.get("*", (req, res) => {

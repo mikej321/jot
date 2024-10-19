@@ -48,6 +48,10 @@
     min-width: 400px;
 }
 
+.mobileFormInputNoIcon.jotChoiceInput {
+    flex-direction: column;
+}
+
 .mainContainer .mobileIcon {
     width: 21px;
     height: 24px;

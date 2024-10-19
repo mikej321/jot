@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { animate, motion, stagger } from "framer-motion";
-import { Link } from "react-router-dom";
+import { animate, AnimatePresence, motion, stagger } from "framer-motion";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import DashboardNav from "../partials/dashboardNav";
@@ -13,143 +13,112 @@ import ScienceDashboardBlock from "../partials/components/scienceDashboardBlock"
 import FinanceDashboardBlock from "../partials/components/financeDashboardBlock";
 import LawDashboardBlock from "../partials/components/lawDashboardBlock";
 import EngineerDashboardBlock from "../partials/components/engineerDashboardBlock";
+import { containerVariant } from "./landing";
 import Sidebar from "../partials/sidebar";
+
+const dashboardContainerVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.1,
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+      when: 'afterChildren',
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const dashboardContentVariant = {
+  hidden: {
+    x: -50,
+    opacity: 0
+  },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+    }
+  },
+  exit: {
+    x: 50,
+    opacity: 0,
+    transition: {
+      duration: 0.2
+    }
+  }
+}
 
 function Dashboard() {
   const [open, setOpen] = useState(false);
-  const initialRender = useRef(true);
-
-  const staggerSideIcons = stagger(0.1, { startDelay: 0.25 });
-
-  const sidebarIconAnimation = async () => {
-      
-    if (open) {
-      animate(
-          '.bar1',
-          { y: 10 },
-          { duration: 0.2 }
-      )
-
-      animate(
-        '.bar2',
-        { opacity: 0 },
-        { duration: 0.2 }
-      )
-      
-      await animate(
-        '.bar3',
-        { y: -10 },
-        { duration: 0.2 }
-      )
-
-      animate(
-        '.bar1',
-        { rotate: 45 },
-        { duration: 0.1, transformOrigin: 'top left' }
-      )
-
-      await animate(
-        '.bar3',
-        { rotate: -45 },
-        { duration: 0.1, transformOrigin: 'top left' }
-      )
-
-      await animate(
-        '.sideLinks',
-        { opacity: 1 },
-        { delay: 0.1, duration: 0.2 }
-      )
-
-      animate(
-        '.sideLinks a',
-        {
-          opacity: 1,
-          x: 0
-        },
-        {
-          type: 'spring',
-          delay: staggerSideIcons, duration: 0.2
-        }
-      )
-    } else {
-
-      animate(
-        '.bar1',
-        { rotate: 0 },
-        { duration: 0.1, transformOrigin: 'top left' }
-      )
-
-      await animate(
-        '.bar3',
-        { rotate: 0 },
-        { duration: 0.1, transformOrigin: 'top left' }
-      )
-      
-      animate(
-        '.bar1',
-        { y: 0 },
-        { duration: 0.2 }
-      )
-
-      animate(
-        '.bar2',
-        { opacity: 1 }
-      )
-
-      await animate(
-        '.bar3',
-        { y: 0 },
-        { duration: 0.2 }
-      )
-
-      animate(
-        '.sideLinks',
-        { opacity: 0 },
-        { duration: 0.2,}
-      )
-
-      await animate(
-        '.sideLinks a',
-        { opacity: 0, x: -50 },
-        { duration: 0.2, delay: staggerSideIcons }
-      )
-
-
-      
-    }
-  }
-
- 
-  useEffect(() => {
-      sidebarIconAnimation()     
-  }, [open])
+  const [blockChoice, setBlockChoice] = useState("");
+  const [dashboardState, setDashboardState] = useState("main");
+  const [jotContent, setJotContent] = useState({
+    title: '',
+    content: '',
+  })
+  const navigate = useNavigate();
 
   const handleSidebarClick = () => {
-    setOpen((prev) => !prev)
-  }
+    setOpen((prev) => !prev);
+  };
+
+  const handleJotChoice = (e) => {
+    const jotTopic = e.currentTarget.childNodes[0].childNodes[1].textContent;
+    console.log(jotTopic);
+    setBlockChoice(jotTopic);
+    setDashboardState("add");
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) navigate("/");
+  }, [navigate]);
+
+  useEffect(() => {
+    /* I want to check for any changes in blockChoice. Of course,
+    make it to where the userEffect doesn't run on first load, 
+    If there is a change, I want to lead it into a new form. 
+    This will be done in a ternary statement below.The blockChoice
+    will be used to determine which component will be animated 
+    and moved to the top of the page. The rest will fade out. */
+  }, [blockChoice]);
 
   return (
     <motion.div
-     className={`mainContainer dashboardContainer ${open ? 'open' : ''}`} 
-     >
+      className={`mainContainer dashboardContainer ${open ? "open" : ""}`}
+    >
       <DashboardNav />
-      <motion.div className={`hamburgerMenu ${open ? 'open' : ''}`} onClick={handleSidebarClick}>
-            <motion.div className="bar bar1"></motion.div>
-            <motion.div className="bar bar2"></motion.div>
-            <motion.div className="bar bar3"></motion.div>
-          </motion.div>
+      <motion.div
+        className={`hamburgerMenu ${open ? "open" : ""}`}
+        onClick={handleSidebarClick}
+      >
+        <motion.div className="bar bar1"></motion.div>
+        <motion.div className="bar bar2"></motion.div>
+        <motion.div className="bar bar3"></motion.div>
+      </motion.div>
       <motion.div
         className="sidebarContainer"
         initial={{
-            paddingLeft: 0,
+          paddingLeft: 0,
         }}
       >
         <motion.div
-         className="sideLinks"
-         initial={{
-          opacity: 0,
-         }}
-         >
+          className="sideLinks"
+          initial={{
+            opacity: 0,
+          }}
+        >
           <Link to="/dashboard/addJot">Add Jot</Link>
           <Link to="/dashboard/editJot">Edit Jot</Link>
           <Link to="/dashboard/removeJot">Remove Jot</Link>
@@ -158,24 +127,238 @@ function Dashboard() {
         </motion.div>
       </motion.div>
       <div className="titleRowContainer">
-          <div className="titleContainer">
-            <h1 className="dashboardTitle">Dashboard</h1>
-          </div>
-          <Searchbar />
+        <div className="titleContainer">
+          <h1 className="dashboardTitle">Dashboard</h1>
+        </div>
+        <Searchbar />
       </div>
-      <div className="dashboardContent">
+      <div className='dashboardContent'>
         <DashboardCanvas>
-          <p className="dashboardInstructions">
-            Choose a category and start Jotting your thoughts
-          </p>
-          <div className="blockContainer">
-            <CodingDashboardBlock />
-            <MathDashboardBlock />
-            <ScienceDashboardBlock />
-            <FinanceDashboardBlock />
-            <LawDashboardBlock />
-            <EngineerDashboardBlock />
-          </div>
+          {dashboardState === 'main' ? (
+            <p className="dashboardInstructions">
+              Choose a category and start Jotting your thoughts
+            </p>
+          ) : (<></>)
+          }
+          
+          <AnimatePresence>
+            <div className={`blockContainer ${dashboardState === 'add' ? 'jotAdd' : ''}`}>
+              {dashboardState === "main" ? (
+                <>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <CodingDashboardBlock />
+                  </motion.div>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <MathDashboardBlock />
+                  </motion.div>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <ScienceDashboardBlock />
+                  </motion.div>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <FinanceDashboardBlock />
+                  </motion.div>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <LawDashboardBlock />
+                  </motion.div>
+                  <motion.div
+                  initial={{
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  onClick={(e) => handleJotChoice(e)}>
+                    <EngineerDashboardBlock />
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  {blockChoice.toLowerCase() === "coding" ? (
+                    <motion.div
+                    key="coding"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <CodingDashboardBlock />
+                    </motion.div>
+                  ) : blockChoice.toLowerCase() === "math" ? (
+                    <motion.div
+                    key="math"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <MathDashboardBlock />
+                    </motion.div>
+                  ) : blockChoice.toLowerCase() === "science" ? (
+                    <motion.div
+                    key="science"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <ScienceDashboardBlock />
+                    </motion.div>
+                  ) : blockChoice.toLowerCase() === "finance" ? (
+                    <motion.div
+                    key="finance"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <FinanceDashboardBlock />
+                    </motion.div>
+                  ) : blockChoice.toLowerCase() === "law" ? (
+                    <motion.div
+                    key="law"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <LawDashboardBlock />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                    key="engineer"
+                    initial={{
+                      y: 50,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      y: -50,
+                      opacity: 0
+                    }}
+                    className="block">
+                      <EngineerDashboardBlock />
+                    </motion.div>
+                  )}
+            
+                  <p className="addTitle">Create your first sub-category</p>
+                  <div className="mobileFormInputNoIcon jotChoiceInput">
+                    <label htmlFor="category">Category Name</label>
+                    <input
+                     type="text"
+                     name="category"
+                     id="category"
+                     onChange={(e) => setJotContent(prev => ({
+                      ...prev,
+                      content: e.target.value
+                     }))}
+                     />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    className="landingSubmitButton jotSubmit"
+                  >
+                    Continue
+                  </motion.button>
+                </>
+              )}
+            </div>
+          </AnimatePresence>
         </DashboardCanvas>
       </div>
       <MobileFooter />

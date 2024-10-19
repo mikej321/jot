@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const Router = require("express").Router();
 const prisma = require("../prisma");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 Router.post("/", async (req, res) => {
   const { username, password } = req.body;
@@ -22,18 +23,21 @@ Router.post("/", async (req, res) => {
     return res.status(403).json({ message: "Invalid Password" });
   }
 
-  jwt.sign({ user }, process.env.SECRET_KEY, (err, token) => {
-    if (err) {
-      return res.status(403).json({ message: "Error when signing token" });
-    }
+  jwt.sign(
+    { user },
+    process.env.SECRET_KEY,
+    { expiresIn: "15m" },
+    (err, token) => {
+      if (err)
+        return res.status(403).json({ message: "Error when signing token" });
 
-    // signs and sends the token to the frontend with user and message attached
-    res.json({
-      message: `${user.username} logged in`,
-      user,
-      token,
-    });
-  });
+      res.json({
+        message: `${user.username} logged in`,
+        user,
+        token,
+      });
+    }
+  );
 });
 
 module.exports = Router;
