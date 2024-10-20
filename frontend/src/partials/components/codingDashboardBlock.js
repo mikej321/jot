@@ -1,13 +1,28 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/dashboard.css";
+import { motion } from "framer-motion";
+
+const blockVariant = {
+  hover: {
+    scale: [1, 1.1, 1],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+    },
+  },
+};
 
 function CodingDashboardBlock() {
   return (
-    <div className="dashboardBlock codingBlock">
+    <motion.div
+      className="dashboardBlock codingBlock"
+      variants={blockVariant}
+      whileHover="hover"
+    >
       <FontAwesomeIcon icon={faCode} className="dashboardIcon" />
       <div className="blockLabel">Coding</div>
-    </div>
+    </motion.div>
   );
 }
 

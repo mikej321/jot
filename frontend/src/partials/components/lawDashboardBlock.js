@@ -1,13 +1,28 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGavel } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/dashboard.css";
+import { motion } from "framer-motion";
+
+const blockVariant = {
+  hover: {
+    scale: [1, 1.1, 1],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+    },
+  },
+};
 
 function LawDashboardBlock() {
   return (
-    <div className="dashboardBlock lawBlock">
+    <motion.div
+      className="dashboardBlock lawBlock"
+      variants={blockVariant}
+      whileHover="hover"
+    >
       <FontAwesomeIcon icon={faGavel} className="dashboardIcon" />
       <div className="blockLabel">Law</div>
-    </div>
+    </motion.div>
   );
 }
 

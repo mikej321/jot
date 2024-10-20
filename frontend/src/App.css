@@ -72,8 +72,6 @@ button {
 .mainContainer {
     position: relative;
     display: grid;
-    min-height: 100vh;
-    max-height: 110vh;
     margin: 0 auto;
     gap: 20px;
     padding: 20px;
@@ -100,7 +98,7 @@ button {
     display: grid;
     width: 100%;
     max-width: 500px;
-    grid-template-rows: 80px 200px repeat(2, 1fr);
+    grid-template-rows: 80px 200px minmax(150px, 480px) 140px;
     grid-template-columns: minmax(200px, 375px);
     grid-template-areas: "nav" "pageTitleSearch" "content" "footer";
     padding-top: 0;
