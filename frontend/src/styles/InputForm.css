@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 .mobileFormInput {
     display: flex;
     align-items: center;
@@ -25,6 +27,71 @@
                 0px 2px 4px rgba(17, 46, 29, .4),
                 0px 2px 4px rgba(119, 148, 131, .4),
                 0px 2px 4px rgba(119, 148, 131, .4);
+}
+
+.jotTitleInput {
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    width: 100%;
+    padding-block: 10px;
+    border-radius: 8px;
+    padding-inline: 20px;
+}
+
+.contentInputContainer {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    width: 100%;
+    gap: 6px;
+    padding-block: 10px 20px;
+    border-radius: 8px;
+    padding-inline: 20px;
+}
+
+.jotTitleInput.contentInputContainer {
+    gap: 10px;
+}
+
+.jotTitleLabel {
+    font-family: 'IBM Plex Serif', system-ui;
+    font-weight: bold;
+    color: rgba(77, 68, 55, .8);
+}
+
+#jotTitle {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    height: 100%;
+    font-size: 20px;
+    color: rgba(77, 68, 55, .8);
+    font-family: 'IBM Plex Sans', system-ui;
+    font-weight: 600;
+}
+
+#jotTitle:focus {
+    border: none;
+    outline: none;
+}
+
+#content {
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'IBM Plex Sans', system-ui;
+    color: rgba(77, 68, 55, .8);
+    font-size: 16px;
+}
+
+#content:focus {
+    border: none;
+    outline: none;
+}
+
+#content.defaultValue {
+    color: rgba(77, 68, 55, .4);
 }
 
 .mobileFormInputNoIcon {

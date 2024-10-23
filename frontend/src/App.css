@@ -98,16 +98,26 @@ button {
     display: grid;
     width: 100%;
     max-width: 500px;
-    grid-template-rows: 80px 200px minmax(150px, 480px) 140px;
+    height: 100vh;
     grid-template-columns: minmax(200px, 375px);
-    grid-template-areas: "nav" "pageTitleSearch" "content" "footer";
+    grid-template-areas: "nav" "pageTitleSearch" "content";
     padding-top: 0;
     gap: 0;
+    grid-template-rows: 80px 200px minmax(200px, 520px);
+}
+
+.mainContainer.dashboardContainer.mainDashboard {
+    /* grid-template-rows: 80px 200px 1fr; */
+}
+
+.mainContainer.dashboardContainer.addDashboard {
+    /* grid-template-rows: 80px 200px 1fr; */
 }
 
 @media screen and (min-width: 600px) {
     .mainContainer.dashboardContainer {
         max-width: 1440px;
+        height: initial;
         grid-template-areas: "nav nav nav" "sidebar pageTitleSearch pageTitleSearch" "sidebar content content";
         grid-template-rows: 100px 170px 1fr;
         grid-template-columns: 0px 1fr 2fr;

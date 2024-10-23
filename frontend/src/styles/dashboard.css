@@ -272,10 +272,7 @@
 
 .dashboardCanvas {
     grid-area: content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: grid;
     width: 100%;
     height: 100%;
     /* max-height: 400px; */
@@ -289,6 +286,73 @@
     padding-inline: 15px;
 }
 
+.dashboardCanvas.mainCanvas {
+    grid-template-rows: auto 100px;
+    /* gap: 20px; */
+    height: clamp(150px, 100%, 500px);
+    margin-top: 20px;
+}
+
+.dashboardCanvas.addCanvas {
+    grid-template-rows: repeat(3, auto) 80px;
+    justify-items: center;
+    gap: 20px;
+    height: clamp(150px, 100%, 550px);
+    padding-block: initial;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.dashboardTextContent {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'IBM Plex Sans', system-ui;
+    width: 100%;
+    gap: 40px;
+    min-height: 70px;
+    max-height: 90px;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboardIntro {
+    font-family: 'IBM Plex Serif', system-ui !important;
+    font-size: 24px;
+    font-weight: 500;
+    color: rgb(70, 49, 21);
+}
+
+.jotAmount {
+    font-weight: 700;
+}
+
+.addInstructions {
+    font-family: 'IBM Plex Sans', system-ui !important;
+    font-weight: 300;
+    font-size: 16px;
+    color:rgb(70, 49, 21);
+}
+
+.continueButton {
+    width: 100%;
+    max-width: 240px;
+    height: 60px;
+    background: rgb(70, 49, 21);
+    border: none;
+    border-radius: 12px;
+    color: rgba(255, 227, 187, .65);
+    justify-self: center;
+    cursor: pointer;
+    transition: backgroundColor 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+}
+
+.continueButton:hover {
+    background: rgb(160, 127, 84);
+    color: rgb(70, 49, 21);
+}
+
 @media screen and (max-height: 700px) {
     .dashboardCanvas {
         max-height: 320px;
@@ -296,8 +360,8 @@
         padding-block: 20px;
     }
 
-    .blockContainer {
-        margin-top: 0 !important;
+    .dashboardCanvas.mainCanvas {
+        
     }
 }
 
@@ -410,10 +474,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    width: clamp(75px, 100%, 130px);
-    height: 100%;
-    min-height: 90px;
+    width: 90px;
+    height: 90px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 20%);
     box-shadow: 2px 4px 8px rgba(189, 174, 154, 80%),
@@ -424,9 +486,17 @@
     pointer-events: all;
 }
 
+
+.folderPlus {
+    color: rgba(70, 49, 21, .8);
+    width: 32px;
+    height: 28px;
+    margin-top: 12px;
+}
+
 .blockLabel {
     font-family: 'IBM Plex Sans', system-ui;
-    font-size: 12px;
+    font-size: 14px;
     color: rgb(70, 49, 21);
 }
 
@@ -585,14 +655,23 @@ p.logo {
                 opacity 0.2s ease-in-out;
 }
 
-.subCategoryContainer {
+.textNavigationContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 15px;
 }
 
-.subCategoryContainer .titleContainer {
+.textNavigationContainer.yourJotNavigationContainer {
+
+}
+
+.textNavigationContainer.addNavigationContainer {
+    margin-top: initial;
+    height: 200px;
+}
+
+.textNavigationContainer .titleContainer {
     font-weight: 700;
     font-size: 24px;
 }

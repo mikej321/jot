@@ -19,4 +19,13 @@ model User {
   lastName  String
   username  String @unique
   password  String
+  jots      Jots[] @relation("userJots")
+}
+
+model Jots {
+  id      Int    @id @unique @default(autoincrement())
+  title   String
+  content String
+  userId  Int
+  user    User   @relation("userJots", fields: [userId], references: [id])
 }

@@ -22,9 +22,6 @@ function DashboardNav() {
           className="navbarIcon"
           onClick={handleLogout}
         />
-        <div className="nameBubble">
-          <div className="userNameFirstLetter">M</div>
-        </div>
         <BrightnessToggle />
       </nav>
       <nav className="dashboardNav desktopDashboardNav">

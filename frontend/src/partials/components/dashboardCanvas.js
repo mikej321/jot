@@ -1,7 +1,25 @@
+import { motion } from "framer-motion";
 import "../../styles/dashboard.css";
 
-function DashboardCanvas({ children }) {
-  return <div className="dashboardCanvas">{children}</div>;
+function DashboardCanvas({ children, dashboardState }) {
+  return (
+    <motion.div
+      className={`dashboardCanvas ${
+        dashboardState === "main"
+          ? "mainCanvas"
+          : dashboardState === "jots"
+          ? "jotCanvas"
+          : dashboardState === "add"
+          ? "addCanvas"
+          : ""
+      }`}
+      transition={{
+        staggerChildren: 0.3,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 /* Note to self
