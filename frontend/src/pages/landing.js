@@ -124,6 +124,50 @@ const formInputVariant = {
   },
 };
 
+const errorContainerVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      when: "beforeChildren",
+      staggerDirection: 1
+    }
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      staggerChildren: 0.2,
+      when: "afterChildren",
+      staggerDirection: -1
+    }
+  }
+}
+
+const errorMessageVariant = {
+  hidden: {
+    y: -10,
+    opacity: 0
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.2
+    }
+  },
+  exit: {
+    y: -10,
+    opacity: 0,
+    transition: {
+      duration: 0.2
+    }
+  }
+}
+
+
 function LandingPage() {
   const [formState, setFormState] = useState("login");
   const [buttonVisibility, setButtonVisibility] = useState(true);
@@ -133,8 +177,10 @@ function LandingPage() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [modalSuccess, setModalSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const firstRender = useRef(true);
 
@@ -163,16 +209,12 @@ function LandingPage() {
         navigate("/api/dashboard");
       }, 2600);
     } catch (err) {
-      // Handle error
       if (err.response) {
-        // Request was made and server responded with a code
-        setMessage(err.response.data.message);
-      } else if (err.request) {
-        // Request was made but no response
-        setMessage("No response from server. Please try again");
-      } else {
-        // Something else has happened
-        setMessage("An error has occured. Please try again");
+        if (err.response.data.errors) {
+          setErrorMessage(err.response.data.errors.map(error => error.msg))
+        } else {
+          setErrorMessage(err.response.data.error.message);
+        }
       }
     }
   };
@@ -201,16 +243,12 @@ function LandingPage() {
         navigate("/api/dashboard");
       }, 600);
     } catch (err) {
-      // Handle error
       if (err.response) {
-        // Request was made and server responded with a code
-        setMessage(err.response.data.message);
-      } else if (err.request) {
-        // Request was made but no response
-        setMessage("No response from server. Please try again");
-      } else {
-        // Something else has happened
-        setMessage("An error has occured. Please try again");
+        if (err.response.data.errors) {
+          setErrorMessage(err.response.data.errors.map((error) => error.msg));
+        } else {
+          setErrorMessage(err.response.data.error.message);
+        }
       }
     }
   };
@@ -248,18 +286,20 @@ function LandingPage() {
     <motion.form
       className="mainContainer landingContainer"
       onSubmit={formState === "login" ? handleLogin : handleSignup}
-      layout
+      
     >
-      {/* On the mobile version of the app, I want to create a circular
-          phrase that says 'A note-taking App' and it will circle the
-          outside of the main content on the landing page. This could
-          be done after everything is set up */}
+      {/* Things I need to try to fix the animation
+      
+        1. Try to experiment with putting 'layout' on the errors container only
+
+        2. Wrap AnimatePresence around the error handlers containers, see if that helps
+      */}
       <nav className="landingNav">
-        <motion.div className="dayNightModeToggle" layout>
+        <motion.div className="dayNightModeToggle" >
           <BrightnessToggle />
         </motion.div>
       </nav>
-      <motion.div className="contentContainer">
+      <motion.div className="contentContainer" layout>
         <motion.div className="pageContent landingContent">
           <h1>Welcome to Jot!</h1>
           <p>Please log in or sign up below</p>
@@ -268,8 +308,10 @@ function LandingPage() {
           <DesktopToggle setFormState={setFormState} />
         </motion.div>
       </motion.div>
-      <motion.div className="pageInputContainer landingInputContainer">
-        <AnimatePresence mode="wait">
+      <motion.div
+       className="pageInputContainer landingInputContainer"
+       
+       >
           {formState === "login" ? (
             <motion.div
               className="formInputs loginInputs"
@@ -281,9 +323,57 @@ function LandingPage() {
             >
               <motion.div className="inputMotion" variants={formInputVariant}>
                 <UsernameInput getUsername={getUsername} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   onAnimationStart={() => setIsAnimating(true)}
+                   onAnimationComplete={() => setIsAnimating(false)}
+                   style={{ overflow: isAnimating ? "hidden" : "auto" }}
+                   >
+                    {
+                      errorMessage && (
+                        errorMessage.filter(error => error.includes('Username'))
+                        .map((err, index) => <motion.p
+                         className="errorMsg" 
+                         variants={errorMessageVariant}
+                         key={index}
+                         
+                         >{err}</motion.p>)
+                      )
+                    }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
               <motion.div className="inputMotion" variants={formInputVariant}>
                 <PasswordInput getPassword={getPassword} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   onAnimationStart={() => setIsAnimating(true)}
+                   onAnimationEnd={() => setIsAnimating(false)}
+                   style={{ overflow: isAnimating ? "hidden" : "auto" }}
+                   >
+                    {
+                      errorMessage && (
+                        errorMessage.filter(error => error.includes('Password'))
+                        .map((err, index) => <motion.p
+                         className="errorMsg" 
+                         variants={errorMessageVariant}
+                         key={index}
+                         
+                         >{err}</motion.p>)
+                      )
+                    }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
             </motion.div>
           ) : (
@@ -294,6 +384,7 @@ function LandingPage() {
               initial="hidden"
               animate="visible"
               exit="exit"
+              
             >
               <AnimatePresence mode="wait">
                 {modalSuccess && (
@@ -312,6 +403,7 @@ function LandingPage() {
                       opacity: 0,
                       zIndex: -1,
                     }}
+                    
                   >
                     <p>Thanks for joining</p>
                     <p className="userIdentification">{successMessage}</p>
@@ -319,26 +411,127 @@ function LandingPage() {
                   </motion.div>
                 )}
               </AnimatePresence>
-              <motion.div className="inputMotion" variants={formInputVariant}>
+              <motion.div
+               className="inputMotion" 
+               variants={formInputVariant}
+               
+               >
                 <FirstNameInput getFirstName={getFirstName} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   >
+                     {
+                       errorMessage && (
+                         errorMessage.filter(err => err.includes('First'))
+                         .map((errResult, index) => <motion.p
+                          className="errorMsg" 
+                          key={index}
+                          variants={errorMessageVariant}
+                          
+                          >{errResult}</motion.p>)
+                       )
+                     }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
+              <motion.div
+               className="inputMotion" 
+               variants={formInputVariant}
+               
+               >
                 <LastNameInput getLastName={getLastName} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   >
+                    {
+                      errorMessage && (
+                        errorMessage.filter(err => err.includes('Last'))
+                        .map((errResult, index) => <motion.p
+                         className="errorMsg" 
+                         key={index}
+                         variants={errorMessageVariant}
+                         
+                         >{errResult}</motion.p>)
+                      )
+                    }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
+              <motion.div
+               className="inputMotion" 
+               variants={formInputVariant}
+               
+               >
                 <UsernameInput getUsername={getUsername} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   >
+                    {
+                      errorMessage && (
+                        errorMessage.filter(err => err.includes('Username'))
+                        .map((errResult, index) => <motion.p
+                         className="errorMsg" 
+                         key={index}
+                         variants={errorMessageVariant}
+                         
+                         >{errResult}</motion.p>)
+                      )
+                    }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
-              <motion.div className="inputMotion" variants={formInputVariant}>
+              <motion.div
+               className="inputMotion" 
+               variants={formInputVariant}
+               layout
+               >
                 <PasswordInput getPassword={getPassword} />
+                <AnimatePresence>
+                  <motion.div
+                   className="errorContainer"
+                   variants={errorContainerVariant}
+                   initial="hidden"
+                   animate="visible"
+                   exit="exit"
+                   >
+                    {
+                      errorMessage && (
+                        errorMessage.filter(err => err.includes('Password'))
+                        .map((errResult, index) => <motion.p
+                         className="errorMsg" 
+                         key={index}
+                         variants={errorMessageVariant}
+                         
+                         >{errResult}</motion.p>)
+                      )
+                    }
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
             </motion.div>
           )}
-        </AnimatePresence>
+        
       </motion.div>
       <motion.button
         type="submit"
         className="landingSubmitButton"
         variants={contentVariant}
+        layout
       >
         Continue
       </motion.button>
