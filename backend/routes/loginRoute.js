@@ -41,7 +41,7 @@ Router.post(
     jwt.sign(
       { id: user.id },
       process.env.SECRET_KEY,
-      { expiresIn: "15m" },
+      { expiresIn: "2h" },
       (err, token) => {
         if (err)
           return res.status(403).json({ message: "Error when signing token" });

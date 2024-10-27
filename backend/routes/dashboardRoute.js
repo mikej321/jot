@@ -86,4 +86,37 @@ Router.post("/jot-add", verifyToken, async (req, res) => {
   }
 });
 
+Router.get("/get-jots", verifyToken, async (req, res) => {
+  try {
+    const jots = await prisma.jots.findMany({
+      where: {
+        userId: req.userId,
+      },
+    });
+    res.json({
+      jots,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error retrieving jots" });
+  }
+});
+
+Router.delete("/delete-jot/:id", verifyToken, async (req, res) => {
+  try {
+    const jotId = req.params.id; // Access the ID from the URL parameters
+
+    const deletedJot = await prisma.jots.delete({
+      where: {
+        id: parseInt(jotId),
+      },
+    });
+
+    res.json({ message: "Jot deleted successfully", deletedJot });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error deleting jot" });
+  }
+});
+
 module.exports = Router;

@@ -9,53 +9,51 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/InputForm.css";
+import { motion } from "framer-motion";
 
-function MobileFooter({ setDashboardState }) {
+function MobileFooter({ handleFooter, getJots }) {
   return (
     <div className="mobileFooter">
-      <div className="footerButton">
-        <FontAwesomeIcon
-          className="mobileFooterIcon"
-          icon={faHouse}
-          onClick={() => {
-            setDashboardState("main");
-          }}
-        />
-      </div>
-      <div className="footerButton">
+      <motion.div
+        className="footerButton"
+        onClick={() => {
+          getJots();
+          handleFooter("main");
+        }}
+      >
+        <FontAwesomeIcon className="mobileFooterIcon" icon={faHouse} />
+      </motion.div>
+      <motion.div
+        className="footerButton"
+        onClick={() => {
+          getJots();
+          handleFooter("jots");
+        }}
+      >
         <FontAwesomeIcon
           className="mobileFooterIcon"
           icon={faPenToSquare}
-          onClick={() => {
-            setDashboardState("edit");
-          }}
+          onClick={() => {}}
         />
-      </div>
-      <div className="footerButton">
+      </motion.div>
+      <motion.div
+        className="footerButton"
+        onClick={() => {
+          getJots();
+          handleFooter("add");
+        }}
+      >
         <FontAwesomeIcon
           className="mobileFooterIcon"
           icon={faPlus}
-          onClick={() => {
-            setDashboardState("add");
-          }}
+          onClick={() => {}}
         />
-      </div>
-      <div className="footerButton">
-        <FontAwesomeIcon
-          className="mobileFooterIcon"
-          icon={faTrashCan}
-          onClick={() => {
-            setDashboardState("remove");
-          }}
-        />
-      </div>
+      </motion.div>
       <div className="footerButton">
         <FontAwesomeIcon
           className="mobileFooterIcon"
           icon={faGear}
-          onClick={() => {
-            setDashboardState("settings");
-          }}
+          onClick={() => {}}
         />
       </div>
     </div>

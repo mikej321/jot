@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 .dashboardNav {
     grid-area: nav;
     display: flex;
@@ -273,16 +275,20 @@
 .dashboardCanvas {
     grid-area: content;
     display: grid;
+    grid-auto-rows: 80px;
     width: 100%;
     height: 100%;
-    /* max-height: 400px; */
+    max-height: 800px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 10px;
     background: rgba(255, 255, 255, 20%);
     border-radius: 12px;
     box-shadow: 4px 4px 8px rgba(131, 77, 0, 40%),
                 1px 1px 2px rgba(131, 77, 0, 40%),
                 -1px -1px 2px rgba(233, 179, 102, 40%),
                 -4px 4px 4px rgb(233, 179, 102);
-    padding-block: 40px 20px;
+    padding-block: 20px;
     padding-inline: 15px;
 }
 
@@ -693,3 +699,48 @@ p.logo {
     color: rgb(232, 73, 23);
     font-weight: 700;
 }
+
+.panelButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding-inline: 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 20%);
+    box-shadow: 2px 4px 8px rgba(189, 174, 154, 40%),
+                1px 1px 1px rgba(189, 174, 154, 40%),
+                -1px -1px 1px rgba(240, 225, 205, 40%),
+                -4px 4px 7px rgba(240, 225, 205, 40%);
+    cursor: pointer;
+}
+
+.panelTitle {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'IBM Plex Serif', system-ui !important;
+    color: rgb(70, 49, 21);
+}
+
+.trash {
+    width: 17.5px;
+    height: 20px;
+    color: rgb(232, 73, 23);
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.trash path {
+    pointer-events: none;
+}
+
+
+/* Add intro and exit animations for the jots coming
+in. */
+
+/* Set up the content inside of the jots and when the
+jot is clicked, it will populate the jot with the content
+and expand downwards. */
+
+/* sticky the footer button to the bottom instead of having
+it fixed */

@@ -20,7 +20,7 @@ const dashboardRoute = require("./routes/dashboardRoute");
 
 const corsOptions = {
   origin: "http://localhost:3000",
-  methods: ["GET", "POST", "OPTIONS"],
+  methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
