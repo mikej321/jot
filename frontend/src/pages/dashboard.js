@@ -209,7 +209,7 @@ function Dashboard() {
 
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/edit-jot-title/${jotId}`,
+        `http://localhost:5000/api/dashboard/edit-jot-title/${jotId}`,
         {
           title: editValue.titleEditVal,
         },
@@ -235,7 +235,7 @@ function Dashboard() {
 
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/edit-jot-content/${jotId}`,
+        `http://localhost:5000/api/dashboard/edit-jot-content/${jotId}`,
         {
           content: editValue.contentEditVal,
         },
@@ -260,7 +260,7 @@ function Dashboard() {
 
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/jot-add`,
+        "http://localhost:5000/api/dashboard/jot-add",
         {
           title: jotContent.title,
           content: jotContent.content,
@@ -287,7 +287,7 @@ function Dashboard() {
 
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/get-jots`,
+        "http://localhost:5000/api/dashboard/get-jots",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -312,7 +312,7 @@ function Dashboard() {
     const token = localStorage.getItem("token");
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/dashboard/delete-jot/${jotId}`,
+        `http://localhost:5000/api/dashboard/delete-jot/${jotId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

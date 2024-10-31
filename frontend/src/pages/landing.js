@@ -193,7 +193,7 @@ function LandingPage() {
 
     try {
       // Send the username and password here to the backend
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/signup`, {
+      const response = await axios.post("http://localhost:5000/api/signup", {
         firstName,
         lastName,
         username,
@@ -226,7 +226,7 @@ function LandingPage() {
     try {
       // Send the username and password here to the backend
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/login`,
+        "http://localhost:5000/api/login",
         {
           username,
           password,
