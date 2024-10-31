@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import BrightnessToggle from "./components/brightnessToggle";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 import "../styles/dashboard.css";
 

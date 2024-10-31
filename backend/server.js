@@ -17,6 +17,7 @@ const verifyToken = require("./controllers/verifyToken");
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
 const dashboardRoute = require("./routes/dashboardRoute");
+const aboutMeRoute = require("./routes/aboutMeRoute");
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -51,6 +52,9 @@ app.use("/api/login", loginRoute);
 
 // Dashboard route
 app.use("/api/dashboard", verifyToken, dashboardRoute);
+
+// About me route
+app.use("/api/about-me", verifyToken, aboutMeRoute);
 
 // Main react route
 app.get("*", (req, res) => {

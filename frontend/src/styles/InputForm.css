@@ -37,6 +37,7 @@
     padding-block: 10px;
     border-radius: 8px;
     padding-inline: 20px;
+    background: rgba(193, 169, 137, .8);
 }
 
 .contentInputContainer {
@@ -83,6 +84,7 @@
     font-family: 'IBM Plex Sans', system-ui;
     color: rgba(77, 68, 55, .8);
     font-size: 16px;
+    white-space: pre-wrap;
 }
 
 #content:focus {
@@ -224,6 +226,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 25px;
+    transition: all 0.2s ease-in-out;
 }
 
 @media screen and (min-width: 600px) {

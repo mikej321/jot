@@ -4,6 +4,7 @@ import {
   faPlus,
   faTrashCan,
   faGear,
+  faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -12,17 +13,10 @@ import "../styles/InputForm.css";
 import { motion } from "framer-motion";
 
 function MobileFooter({ handleFooter, getJots }) {
+  const navigate = useNavigate();
+
   return (
     <div className="mobileFooter">
-      <motion.div
-        className="footerButton"
-        onClick={() => {
-          getJots();
-          handleFooter("main");
-        }}
-      >
-        <FontAwesomeIcon className="mobileFooterIcon" icon={faHouse} />
-      </motion.div>
       <motion.div
         className="footerButton"
         onClick={() => {
@@ -43,19 +37,17 @@ function MobileFooter({ handleFooter, getJots }) {
           handleFooter("add");
         }}
       >
-        <FontAwesomeIcon
-          className="mobileFooterIcon"
-          icon={faPlus}
-          onClick={() => {}}
-        />
+        <FontAwesomeIcon className="mobileFooterIcon" icon={faPlus} />
       </motion.div>
-      <div className="footerButton">
-        <FontAwesomeIcon
-          className="mobileFooterIcon"
-          icon={faGear}
-          onClick={() => {}}
-        />
-      </div>
+      <motion.div
+        className="footerButton"
+        onClick={() => {
+          getJots();
+          navigate("/api/about-me");
+        }}
+      >
+        <FontAwesomeIcon className="mobileFooterIcon" icon={faQuestion} />
+      </motion.div>
     </div>
   );
 }

@@ -21,6 +21,14 @@
     background: #F3AF01;
 }
 
+.mainContainer.dashboardContainer.mainDashboard.darkMode .toggleContainer {
+    background: #0B3304;
+}
+
+.mainContainer.dashboardContainer.jotDashboard.darkMode .toggleContainer {
+    background: #0B3304;
+}
+
 .ball {
    position: absolute;
    top: 2px;

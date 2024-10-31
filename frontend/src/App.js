@@ -2,6 +2,7 @@ import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import LandingPage from "./pages/landing";
 import Dashboard from "./pages/dashboard";
+import AboutMe from "./pages/aboutMe";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/api/dashboard" element={<Dashboard />} />
+        <Route path="/api/about-me" element={<AboutMe />} />
       </Routes>
     </motion.div>
   );

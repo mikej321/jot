@@ -115,6 +115,58 @@ button {
     /* grid-template-rows: 80px 200px 1fr; */
 }
 
+.mainContainer.aboutMePage {
+    display: grid;
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 250px 280px 150px;
+}
+
+
+
+.mainContainer.aboutMePage h1,
+.mainContainer.aboutMePage h2 {
+    text-align: center;
+}
+
+.mainContainer.aboutMePage h1 {
+    line-height: 50px;
+    align-self: center;
+}
+
+.mainContainer.aboutMePage h2 {
+    line-height: 60px;
+}
+
+.mainContainer.aboutMePage .contactInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.liContainer {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+}
+
+.liContainer a {
+    text-decoration: none;
+    color: rgb(70, 49, 21);
+    transition: color 0.2s ease-in-out;
+}
+
+.mainContainer.darkMode .liContainer a,
+.mainContainer.darkMode .dashboardIcon {
+    color:rgb(210, 248, 213);
+}
+
+
+
+.liContainer a:hover {
+    color:rgb(136, 104, 60);
+}
+
 @media screen and (min-width: 600px) {
     .mainContainer.dashboardContainer {
         max-width: 1440px;

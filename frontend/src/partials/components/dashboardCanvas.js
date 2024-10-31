@@ -16,6 +16,7 @@ function DashboardCanvas({ children, dashboardState }) {
       transition={{
         staggerChildren: 0.3,
       }}
+      layout
     >
       {children}
     </motion.div>

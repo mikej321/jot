@@ -181,6 +181,7 @@ function LandingPage() {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
+  
 
   const firstRender = useRef(true);
 
