@@ -47,7 +47,12 @@ const JotTitleInput = ({ grabJotTitle }) => {
       <motion.label className="jotTitleLabel" htmlFor="title">
         Jot Title
       </motion.label>
-      <input type="text" name="title" id="jotTitle" onChange={grabJotTitle} />
+      <input
+        type="text"
+        name="title"
+        id="jotTitle"
+        onChange={(e) => grabJotTitle(e)}
+      />
     </motion.div>
   );
 };

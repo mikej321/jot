@@ -856,6 +856,7 @@ p.logo {
     position: absolute;
     top: -20px;
     left: 50%;
+    transform: translateX(-50%);
     width: auto;
     min-width: 350px;
     height: auto;

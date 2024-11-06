@@ -923,9 +923,9 @@ function Dashboard() {
                   },
                 }}
                 onClick={() => {
-                  setDashboardState("jots");
                   submitJot();
                   getJots();
+                  setDashboardState("jots");
                 }}
                 key="add-4"
               >

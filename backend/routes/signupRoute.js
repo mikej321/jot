@@ -16,11 +16,7 @@ Router.post(
       .withMessage("Last name is empty")
       .isLength({ min: 2, max: 14 })
       .withMessage("Last name must be between 2 and 14 characters"),
-    body("username")
-      .notEmpty()
-      .withMessage("Username is empty")
-      .isLength({ min: 3, max: 6 })
-      .withMessage("Username must be between 3 and 6 characters"),
+    body("username").notEmpty().withMessage("Username is empty"),
     body("password")
       .notEmpty()
       .withMessage("Password is empty")

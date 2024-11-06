@@ -6,7 +6,8 @@ const prisma = new PrismaClient();
 
 // const main = async () => {
 //   try {
-//     await prisma.user.deleteMany();
+//     await prisma.user.deleteMany({});
+//     await prisma.jots.deleteMany({});
 //     console.log("all users deleted");
 //   } catch (err) {
 //     console.error(err.message);
