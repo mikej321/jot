@@ -37,7 +37,7 @@ app.use(
 
 // relative path options and cors options middleware
 app.options("*", cors(corsOptions));
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+// app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // Test route
 app.get("/test", (req, res) => {
@@ -62,6 +62,6 @@ app.get("*", (req, res) => {
 });
 
 // listen method
-app.listen(process.env.BACKEND_PORT, () => {
+app.listen(process.env.BACKEND_PORT || 5000, () => {
   console.log(`listening on port ${process.env.BACKEND_PORT}`);
 });
