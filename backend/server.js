@@ -62,6 +62,6 @@ app.get("*", (req, res) => {
 });
 
 // listen method
-app.listen(process.env.BACKEND_PORT || 5000, () => {
+app.listen(5000, () => {
   console.log(`listening on port ${process.env.BACKEND_PORT}`);
 });
